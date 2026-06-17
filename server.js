@@ -10,8 +10,15 @@ app.use(express.json()); // מאפשר לשרת לקרוא נתוני JSON
 // app.get('/', (req, res) => {
 //   res.send('השרת של StudeGrant עובד!');
 // });
-app.use('/api/users', userRoutes);
 
+app.use('/api/users', userRoutes);
+const requestRoutes = require('./routes/requestRoutes');
+
+// כל הבקשות שמתחילות ב-/api/requests יופנו לראוטר שלנו
+app.use('/api/requests', requestRoutes);
+
+// חשוב: לאפשר גישה לתיקיית הקבצים כדי שהמנהל יוכל לראות את המסמכים
+app.use('/uploads', express.static('uploads'));
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
